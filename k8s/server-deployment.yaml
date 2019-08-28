@@ -12,6 +12,12 @@ spec:
       labels:
         component: server
     spec:
+      initContainers:
+        - name: check-db-ready
+          image: postgres:9.6.5
+          command: ['sh', '-c', 
+            'until pg_isready -h postgres-cluster-ip-service -p 5432; 
+            do echo waiting for database; sleep 2; done;']
       containers:
         - name: server
           image: kajvalia/multi-server
@@ -25,7 +31,7 @@ spec:
             - name: PGUSER
               value: postgres
             - name: PGHOST
-              value: postgres-cluster-ip-servics
+              value: postgres-cluster-ip-service
             - name: PGPORT
               value: '5432'
             - name: PGDATABASE
