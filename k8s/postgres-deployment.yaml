@@ -19,8 +19,6 @@ spec:
       containers:
         - name: postgres
           image: postgres
-          command: ["/bin/bash", "-c", "--"]
-          args: ["while true; do sleep 30; done;"]
           ports:
             - containerPort: 5432
           volumeMounts: 
